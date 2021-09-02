@@ -4,9 +4,7 @@ import { Notification, Section } from 'rbx';
 import Routes from './routes';
 
 const App = () => (
-  <div>
-    <Routes/>
-  </div>
+  <Routes />
 )
- 
-export default App; 
+
+export default App;
