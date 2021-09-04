@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Container, Column, Button, Dropdown } from 'rbx';
 import logoImage from '../../assets/images/logo-white.png';
 import "../../styles/header.scss";
@@ -9,11 +9,20 @@ import { faList } from '@fortawesome/free-solid-svg-icons';
 
 function HeaderLogged(props) {
     const [redirectToHome, setRedirectToHome] = useState(false);
+    const [name, setName] = useState("");
+
+    const initializeUser = async () => {
+        const user = await JSON.parse(localStorage.getItem('user'));
+        setName(user['name']);
+    }
 
     const logOut = async () => {
         await UsersService.logout();
         setRedirectToHome(true);
     }
+    useEffect(() => {
+        initializeUser()
+    }, [])
 
     if (redirectToHome == true)
         return <Redirect to={{ pathname: "/" }} />
@@ -57,7 +66,7 @@ function HeaderLogged(props) {
                         <Dropdown>
                             <Dropdown.Trigger>
                                 <Button className="button" color="white" outlined>
-                                    <span>Lucas Lima ▼</span>
+                                    <span>{name}</span>
                                 </Button>
                             </Dropdown.Trigger>
                             <Dropdown.Menu>
