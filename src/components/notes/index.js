@@ -4,6 +4,7 @@ import "../../styles/notes.scss";
 import { push as Menu } from 'react-burger-menu'
 import List from "../notes/list";
 import NotesService from '../../services/notes';
+import Editor from "../notes/editor";
 
 const Notes = (props) => {
     const [notes, setNotes] = useState([]);
@@ -14,7 +15,7 @@ const Notes = (props) => {
         if (response.data.length >= 1) {
             setNotes(response.data.reverse());
             setCurrentNote(response.data[0]);
-        }else{
+        } else {
             setNotes([]);
         }
     }
@@ -29,9 +30,17 @@ const Notes = (props) => {
         })
         setCurrentNote(note);
     }
-    const deleteNotes = async(note) =>{
+    const deleteNotes = async (note) => {
         await NotesService.delete(note._id);
         fetchNotes();
+    }
+    const updateNotes = async (oldNote, params) => {
+        const updateNote = await NotesService.update(oldNote._id, params);
+        const index = notes.indexOf(oldNote);
+        const newNotes = notes;
+        newNotes[index] = updateNote.data;
+        setNotes(newNotes);
+        setCurrentNote(updateNote.data);
     }
 
     useEffect(() => {
@@ -49,7 +58,7 @@ const Notes = (props) => {
                     outerContainerId={"notes"}
                     customBurgerIcon={false}
                     customCrossIcon={false}
-                >      
+                >
                     <List
                         notes={notes}
                         selectNote={selectNote}
@@ -61,7 +70,9 @@ const Notes = (props) => {
 
 
                 <Column size={12} className="notes-editor" id="notes-editor">
-                    Editor..
+                    <Editor 
+                        updateNotes={updateNotes}
+                        note={current_note}/>
                 </Column>
             </Column.Group>
         </Fragment>
