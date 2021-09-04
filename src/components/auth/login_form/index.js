@@ -9,11 +9,11 @@ function LoginForm() {
     const [redirectToRegister, setRedirectToRegister] = useState(false);
     const [redirectToNotes, setRedirectToNotes] = useState(false);
     const [error, setError] = useState(false);
-    
+
     const HandleSubmit = async (evt) => {
         evt.preventDefault();
         try {
-            const user = await UsersService.login({email: email, password: password});
+            const user = await UsersService.login({ email: email, password: password });
             setRedirectToNotes(true);
         } catch (error) {
             setError(true);
@@ -61,7 +61,7 @@ function LoginForm() {
                                         <a onClick={e => setRedirectToRegister(true)} className="button is-white has-text-custom-purple">Register or</a>
                                     </Column>
                                     <Column>
-                                        <Button  color="custom-purple" outlined>Login</Button>
+                                        <Button color="custom-purple" outlined>Login</Button>
                                     </Column>
                                 </Column.Group>
                             </Control>

@@ -57,7 +57,7 @@ function HeaderLogged(props) {
                         <Dropdown>
                             <Dropdown.Trigger>
                                 <Button className="button" color="white" outlined>
-                                    <span>Leonardo ▼</span>
+                                    <span>Lucas Lima ▼</span>
                                 </Button>
                             </Dropdown.Trigger>
                             <Dropdown.Menu>
